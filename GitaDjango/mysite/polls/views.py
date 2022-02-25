@@ -1,10 +1,12 @@
 from django.http import HttpResponse
 from .models import *
 from django.shortcuts import render
+from django.utils import timezone
 
 
 def index(request):
-    latest_question_list = Question.objects.order_by('-pub_date')[:5]
+    print(timezone.now())
+    latest_question_list = Question.objects.order_by('-pub_date')
     context = {'latest_question_list': latest_question_list}
     return render(request, 'polls/index.html', context)
 
