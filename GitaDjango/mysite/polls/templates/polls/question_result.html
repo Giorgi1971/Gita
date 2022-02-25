@@ -1,0 +1,24 @@
+<h2>
+    Result Page.
+</h2>
+{% if error_message %}
+{{error_message}}
+{% endif %}
+
+{% if object %}
+<h3>
+    <p>{{ object }}</p>
+</h3>
+<ul>
+
+    {% for ans in object.choices.all %}
+    <li>{{ ans.choice_text }} - {{ans.votes}}</li>
+
+
+    {% endfor %}
+</ul>
+
+
+<a href="{% url 'polls:detail' object.pk %}">Vote again</a>
+
+{% endif %}

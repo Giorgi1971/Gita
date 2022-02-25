@@ -1,24 +1,41 @@
-from django.http import HttpResponse
+from django.urls import reverse
+from django.http import HttpResponse, HttpResponseRedirect
 from .models import *
 from django.shortcuts import render
 from django.utils import timezone
+from django.views.generic import ListView, DeleteView, DetailView, UpdateView
 
 
-def index(request):
-    print(timezone.now())
+def home(request):
+    return render(request, 'polls/home.html')
+
+class QuestionListView(ListView):
+    model = Question
     latest_question_list = Question.objects.order_by('-pub_date')
     context = {'latest_question_list': latest_question_list}
-    return render(request, 'polls/index.html', context)
 
 
-def detail(request, question_id):
-    return HttpResponse("You're looking at question %s." % question_id)
+class QuestionDetailView(DetailView):
+    model = Question
 
 
-def results(request, question_id):
-    response = "You're looking at the results of question %s."
-    return HttpResponse(response % question_id)
+class QuestionResultView(DetailView):
+    model = Question
+    template_name = 'polls/question_result.html'
 
 
-def vote(request, question_id):
-    return HttpResponse("You're voting on question %s." % question_id)
+def vote(request, pk):
+    quest = Question.objects.get(pk=pk)
+    print(request.POST)
+    try:
+        pkc = request.POST['vote']
+    except:
+        return render(request, 'polls/question_detail.html', {
+        'object': quest,
+        'error_message': "You didn't select a choice.",
+        })
+
+    chos = quest.choices.get(pk=pkc)
+    chos.votes += 1
+    chos.save()
+    return HttpResponseRedirect(reverse('polls:results', args=[pk]))

@@ -1,0 +1,27 @@
+<h2>
+    Detail Page.
+</h2>
+{% if error_message %}
+<h2 style="color: red;">
+    {{error_message}}
+
+</h2>
+{%endif%}
+{% if object %}
+<h3>
+    <p>{{object}}</p>
+</h3>
+
+<form action="{% url 'polls:vote' object.pk %}" method="post">
+    {% for ans in object.choices.all %}
+    {% csrf_token %}
+    <input type="radio" name="vote" id="vote{{ans.pk}}" value="{{ans.pk}}">
+    <label for="vote{{ans.pk}}">{{ans}}</label><br>
+    {% endfor %}
+    <br>
+    <input type="submit" value="Submit">
+</form>
+
+<a href="{% url 'polls:question_list' %}">Question List</a>
+
+{% endif %}

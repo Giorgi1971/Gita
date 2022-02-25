@@ -1,0 +1,11 @@
+Question List if exists:
+
+{% if question_list %}
+    <ul>
+    {% for question in question_list %}
+        <li><a href="{% url 'polls:detail' question.pk %}">{{ question.question_text }} - {{ question.pub_date }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No polls are available.</p>
+{% endif %}
