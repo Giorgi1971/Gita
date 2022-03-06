@@ -5,5 +5,5 @@ from . import views
 app_name = 'blog'
 urlpatterns = [
     path('', views.home, name='home'),
-    # path('account/', include('account.urls')),
+    path('<int:pk>/', views.user_page, name='user_page'),
 ]

@@ -18,7 +18,6 @@ def login_user(request):
         password = request.POST.get('password')
 
         user = authenticate(username=username, password=password)
-        print(user.username)
 
         if user:
             if user.is_active:

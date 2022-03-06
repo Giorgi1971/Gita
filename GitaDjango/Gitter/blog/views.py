@@ -7,3 +7,10 @@ from .models import *
 def home(request):
     posts = Post.objects.all()
     return render(request, 'blog/home.html', {'list':posts})
+
+
+
+def user_page(request, pk):
+    posts = Post.objects.filter(author__pk=3)
+    print(posts)
+    return render(request, 'blog/user_page.html', {'posts':posts})
