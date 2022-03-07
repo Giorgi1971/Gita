@@ -11,6 +11,6 @@ def home(request):
 
 
 def user_page(request, pk):
-    posts = Post.objects.filter(author__pk=3)
+    posts = Post.objects.filter(author__pk=pk)
     print(posts)
     return render(request, 'blog/user_page.html', {'posts':posts})
