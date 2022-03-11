@@ -1,5 +1,5 @@
 while True:
-    num = input('Enter number from 1 to 25')
+    num = input('Enter number from 1 to 25: ')
     if not num.isdigit():
         print('Enter Only Digital Numbers!')
         continue
